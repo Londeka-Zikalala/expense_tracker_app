@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pizza Menu</title>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <script src="index.js" defer></script>
-    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="alpineJS.js" defer></script>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js" defer></script>
 </head>
-<body x-data="pizzaCartWithAPI" x-init="getPizzas()">
+<body x-data="pizzaCart" x-init="getPizzas()">
     <h1 x-text="title"></h1>
     <div x-show="pizzas.length">
         <h2>Pizzas:</h2>
