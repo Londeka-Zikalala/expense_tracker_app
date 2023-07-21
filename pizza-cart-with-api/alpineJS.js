@@ -1,5 +1,5 @@
 document.addEventListener('alpine:init', () => {
-    Alpine.data('pizzaCart', function() {
+    Alpine.data('pizzaCartWithAPIWidget', function() {
         return {
             title: 'Perfect Pizza',
             pizzas: [],

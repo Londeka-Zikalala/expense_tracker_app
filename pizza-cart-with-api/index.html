@@ -8,7 +8,7 @@
     <script src="alpineJS.js" defer></script>
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js" defer></script>
 </head>
-<body x-data="pizzaCart" x-init="getPizzas()">
+<body x-data="'pizzaCartWithAPIWidget'" x-init="getPizzas()">
     <h1 x-text="title"></h1>
     <div x-show="pizzas.length">
         <h2>Pizzas:</h2>
