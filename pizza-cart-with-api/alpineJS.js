@@ -10,7 +10,6 @@ document.addEventListener('alpine:init', () => {
                 axios.get(url)
                     .then(result => {
                         this.pizzas = result.data.pizzas;
-                        console.log(this.pizzas); // Check the pizzas array content
                     })
                     .catch(error => {
                         console.error(error);
