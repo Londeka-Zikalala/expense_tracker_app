@@ -1,6 +1,5 @@
 CREATE TABLE category(
 id SERIAL PRIMARY KEY,
-description TEXT,
 category_type TEXT NOT NULL
 );
 
