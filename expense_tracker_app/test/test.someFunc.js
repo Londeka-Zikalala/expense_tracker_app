@@ -1,9 +1,8 @@
 import assert from 'assert';
-import shoeCatalogue from '../service/shoeCatalogueDb.js';
-import db from '../db.js';
+import expenseTracker from '../service/expenseTracker.js';
 
 
-const shoeService = shoeCatalogue(db);
+const expenseTrackerTest = expenseTracker(db);
 
 describe('shoeCatalogue function', function () {
     // Set a timeout for the tests
