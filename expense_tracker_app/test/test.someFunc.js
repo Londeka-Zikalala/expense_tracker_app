@@ -4,7 +4,7 @@ import expenseTracker from '../service/expenseTracker.js';
 
 const expenseTrackerTest = expenseTracker(db);
 
-describe('shoeCatalogue function', function () {
+describe('expenseTracker function', function () {
     // Set a timeout for the tests
     this.timeout(15000);
 
