@@ -21,7 +21,8 @@ app.set('views', './views');
 app.use(express.static('public'));
 
 app.get('/', expenseRoute.showIndex)
-
+app.post('/add', expenseRoute.addExpenseRoute)
+app.get('/add', expenseRoute.allExpensesRoute)
 
 
 

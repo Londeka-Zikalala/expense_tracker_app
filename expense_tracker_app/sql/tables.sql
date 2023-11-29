@@ -9,6 +9,6 @@ CREATE TABLE expense(
 id SERIAL PRIMARY KEY,
 expense TEXT NOT NULL,
 amount NUMERIC NOT NULL,
-total NUMERIC NOT NULL,
+total NUMERIC,
 category_id INT NOT NULL REFERENCES category(id)
 );

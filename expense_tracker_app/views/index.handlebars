@@ -1,16 +1,27 @@
 <div class="container">
     <form action="/add" method="POST">
     <div class="add-expenses">
-        <label for="expense"></label>
-        <input type="text" name="expense" value="{{expense}}">
-        <input type="number" name="amount" value="{{amount}}">
-        <input type="submit" value="Add Expense">
+      <label for="expense">Expense:</label>
+            <input type="text" name="expense" value="{{expense}}">
+            <label for="amount">Amount:</label>
+            <input type="number" name="amount" value="{{amount}}">
+
+            <label for="category">Category:</label>
+            <input type="radio" name="category" value="weekly"> Weekly
+            <input type="radio" name="category" value="monthly"> Monthly
+            <input type="radio" name="category" value="weekday"> Weekday
+            <input type="radio" name="category" value="weekend"> Weekend
+            <input type="radio" name="category" value="once-off"> Once-off
+            <input type="radio" name="category" value="daily"> Daily
+            <input type="submit" value="Add Expense">
+        </div>
+
     </div>
     </form>
 
     <form action="/add/category/{{categoryId}}" method="GET">
-        <label for="monthly"></label>
-        <input type="radio" name="category" value="{{monthly}}">
+      
+   
         
     </form>
 
@@ -18,14 +29,25 @@
         
         <form action="/add" method="GET">
           
-         <div class="expenses-list">
-              {#each categories}
-            <ul>
-                <li>
-                        {{categories}}
-                </li>
-            </ul>
-            {/each}
+         <div class="expenses">
+           
+           <table>
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each categories}}
+            <tr>
+                <td>{{this.category_id}}</td>
+                <td>{{this.total}}</td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+        
          </div>
 
         </form>

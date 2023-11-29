@@ -17,7 +17,8 @@ function expenseTrackerRoute(expensedb){
             const category = req.body.category
                 //call the addExpense function 
             await expensedb.addExpense(category, amount, expense)
-                res.render('index')
+            console.log(expense, amount, category)
+                res.redirect('/add')
         }catch(error){
             console.error(error.message)
             next(error)
@@ -27,6 +28,7 @@ function expenseTrackerRoute(expensedb){
     async function allExpensesRoute(req, res, next){
         //call the all expenses function 
         let categories = await expensedb.allExpenses();
+        console.log(categories)
         res.render('index', {
             categories
         })

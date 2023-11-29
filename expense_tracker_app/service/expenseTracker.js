@@ -2,6 +2,7 @@ function expenseTracker(db){
     //function to get the category id 
 
     async function addExpense(category, amount, expense) {
+    
         try {
             let categoryId;
     
@@ -16,29 +17,34 @@ function expenseTracker(db){
             }
     
             if (categoryId) {
-              
+           
             // Insert the new expense into the expense table
-            await db.none('INSERT INTO expense (expense, amount, category_id) VALUES ($1, $2, $3)', [categoryId, amount, expense]);
+            await db.none('INSERT INTO expense (category_id, amount, expense) VALUES ($1, $2, $3)', [categoryId, amount, expense]);
     
             // Calculate the total amount of expenses for the given category based on frequency 
-            let total;
+            let total = 0;
     
             for (const categoryType of categories) {
-                if (categoryType.category_type === 'monthly' && categoryType.category_type === category) {
-                    total = await db.one('SELECT SUM(amount) AS total FROM expense WHERE category_id = $1', [categoryId]);
-                } else if (categoryType.category_type === 'weekly' && categoryType.category_type === category) {
-                    total = await db.one('SELECT SUM(amount) * 4 AS total FROM expense WHERE category_id = $1', [categoryId]);
-                } else if (categoryType.category_type === 'weekday' && categoryType.category_type === category) {
-                    total = await db.one('SELECT SUM(amount) * 5 AS total FROM expense WHERE category_id = $1', [categoryId]);
-                } else if (categoryType.category_type === 'weekend' && categoryType.category_type === category) {
-                    total = await db.one('SELECT SUM(amount) * 2 AS total FROM expense WHERE category_id = $1', [categoryId]);
-                } else if (categoryType.category_type === 'once-off' && categoryType.category_type === category) {
-                    total = await db.one('SELECT SUM(amount) AS total FROM expense WHERE category_id = $1', [categoryId]);
-                } else if (categoryType.category_type === 'daily' && categoryType.category_type === category) {
-                    total = await db.one('SELECT SUM(amount) * 30 AS total FROM expense WHERE category_id = $1', [categoryId]);
+                if (categoryType.category_type === category) {
+                    total = await db.one('SELECT SUM(expense.amount) AS total FROM expense JOIN category ON expense.category_id = category.id WHERE category.category_type = $1', [category]);
+                    if (categoryType.category_type === 'monthly') {
+                        total.total *= 1;
+                    } else if (categoryType.category_type === 'weekly') {
+                        total.total *= 4;
+                    } else if (categoryType.category_type === 'weekday') {
+                        total.total *= 5;
+                    } else if (categoryType.category_type === 'weekend') {
+                        total.total *= 2;
+                    } else if (categoryType.category_type === 'once-off') {
+                        total.total *= 1;
+                    } else if (categoryType.category_type === 'daily') {
+                        total.total *= 30;
+                    }
+                    // Update the total 
+                    await db.none(`UPDATE expense SET total = $1 WHERE category_id = $2`, [total.total, categoryId]);
                 }
             }
-    
+              
             return "expenses inserted successfully"
     
             }
@@ -69,17 +75,20 @@ function expenseTracker(db){
         let expenseForCategory =[]
 
         for(var i = 0; i<expenses.length; i++){
-            categoryId= expenses[i].category_id
-            if(categoryId){
-                expenseForCategory = await db.manyOrNone(`SELECT * FROM expense WHERE category_id = $1`, [categoryId])
+            if(expenses[i].category_id === categoryId){
+                expenseForCategory.push(expenses[i]);
             }
-    }
+        }
+    
    return expenseForCategory
 
     }
 
+// function to delete expense by id
     async function deleteExpense(expenseId){
+        //get the expenses data
         let expenses = await db.manyOrNone(`SELECT * FROM expense`)
+        //get the expense Id
         for(var i = 0; i<expenses.length; i++){
                 expenseId = expenses[i].id
         }
@@ -87,11 +96,16 @@ function expenseTracker(db){
             await db.none(`DELETE FROM expense WHERE id = $1`, [expenseId])
         }
     }
+
+    async function getTotals(){
+
+    }
     return{
         addExpense,
         allExpenses,
         allExpensesForCategory,
         deleteExpense,
+        getTotals
 
     }
 }

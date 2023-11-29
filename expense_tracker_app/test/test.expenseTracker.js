@@ -1,5 +1,6 @@
 import assert from 'assert';
 import expenseTracker from '../service/expenseTracker.js';
+import db from '../db.js';
 
 
 const expenseTrackerTest = expenseTracker(db);
@@ -8,11 +9,10 @@ describe('expenseTracker function', function () {
     // Set a timeout for the tests
     this.timeout(15000);
 
-//You can set mock data here
 
     beforeEach(async function () {
-        // Set up mock data in the database
-        await db.none(`TRUNCATE expenses RESTART IDENTITY TUSCADE`)
+      //Clear the expense table
+        await db.none(`TRUNCATE expense RESTART IDENTITY CASCADE`)
 
     });
 
@@ -21,7 +21,7 @@ describe('expenseTracker function', function () {
         const amount = 50.00
         const expense = "post office subscription"
         let expenseTotal = await expenseTrackerTest.addExpense(category, amount, expense);
-        assert.equal(expenseTotal , "expense added successfully")
+        assert.equal(expenseTotal , "expenses inserted successfully")
     });
 
     it('should get the expenses list', async function(){
@@ -39,7 +39,23 @@ describe('expenseTracker function', function () {
         //call the all expenses function which returns all the data
         let allExpenses = await expenseTrackerTest.allExpenses();
 
-        assert.deepEqual(allExpenses, [])
+        assert.deepEqual(allExpenses, [
+            {
+              amount: '50',
+              category_id: 2,
+              expense: 'post office subscription',
+              id: 1,
+              total: '50'
+            },
+            {
+              amount: '125',
+              category_id: 1,
+              expense: 'vegetables',
+              id: 2,
+              total: '500'
+            }
+          ]
+          )
     })
     after(function () {
         db.$pool.end();}

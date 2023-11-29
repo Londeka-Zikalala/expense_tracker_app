@@ -1,0 +1,57 @@
+*{box-sizing: border-box;}
+body{
+    width:100%;
+    padding: 10px;
+    margin:5px;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+.add-expenses {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.add-expenses label {
+    font-weight: bold;
+}
+
+.add-expenses input[type="text"],
+.add-expenses input[type="number"] {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.add-expenses input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+
+}
+
+.add-expenses input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.expenses {
+    margin-top: 20px;
+}
+
+.expenses table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.expenses th,
+.expenses td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+
+
