@@ -1,23 +1,31 @@
 <div class="container">
     <form action="/add" method="POST">
-    <div class="add-expenses"></div>
+    <div class="add-expenses">
+        <label for="expense"></label>
+        <input type="text" name="expense" value="{{expense}}">
+        <input type="number" name="amount" value="{{amount}}">
+        <input type="submit" value="Add Expense">
+    </div>
     </form>
 
-
     <form action="/add/category/{{categoryId}}" method="GET">
-
+        <label for="monthly"></label>
+        <input type="radio" name="category" value="{{monthly}}">
+        
     </form>
 
    
         
         <form action="/add" method="GET">
-
+          
          <div class="expenses-list">
+              {#each categories}
             <ul>
                 <li>
-
+                        {{categories}}
                 </li>
             </ul>
+            {/each}
          </div>
 
         </form>

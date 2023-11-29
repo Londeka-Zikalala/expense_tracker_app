@@ -34,6 +34,8 @@ function expenseTrackerRoute(expensedb){
     return{
         showIndex,
         addExpenseRoute,
+        allExpensesRoute,
+        
     }
 }
 

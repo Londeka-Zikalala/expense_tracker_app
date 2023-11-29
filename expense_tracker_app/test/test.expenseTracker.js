@@ -19,10 +19,28 @@ describe('expenseTracker function', function () {
     it('should add an expense', async function(){
         const category = "monthly";
         const amount = 50.00
-       const expense = "post office subscription"
-       let expenseTotal = await expenseTrackerTest.addExpense(category, amount, expense);
+        const expense = "post office subscription"
+        let expenseTotal = await expenseTrackerTest.addExpense(category, amount, expense);
         assert.equal(expenseTotal , "expense added successfully")
     });
+
+    it('should get the expenses list', async function(){
+        //add the expenses 
+        const category = "monthly";
+        const amount = 50.00
+        const expense = "post office subscription";
+
+        const category2 = "weekly";
+        const amount2 = 125.00
+        const expense2= "vegetables";
+        await expenseTrackerTest.addExpense(category, amount, expense);
+        await expenseTrackerTest.addExpense(category2, amount2, expense2);
+
+        //call the all expenses function which returns all the data
+        let allExpenses = await expenseTrackerTest.allExpenses();
+
+        assert.deepEqual(allExpenses, [])
+    })
     after(function () {
         db.$pool.end();}
     )

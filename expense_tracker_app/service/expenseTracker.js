@@ -62,10 +62,36 @@ function expenseTracker(db){
            
         }
     }
-    
+  
+    //function to filter expenses 
+    async function allExpensesForCategory(categoryId){
+        let expenses = await allExpenses()
+        let expenseForCategory =[]
+
+        for(var i = 0; i<expenses.length; i++){
+            categoryId= expenses[i].category_id
+            if(categoryId){
+                expenseForCategory = await db.manyOrNone(`SELECT * FROM expense WHERE category_id = $1`, [categoryId])
+            }
+    }
+   return expenseForCategory
+
+    }
+
+    async function deleteExpense(expenseId){
+        let expenses = await db.manyOrNone(`SELECT * FROM expense`)
+        for(var i = 0; i<expenses.length; i++){
+                expenseId = expenses[i].id
+        }
+        if(expenseId){
+            await db.none(`DELETE FROM expense WHERE id = $1`, [expenseId])
+        }
+    }
     return{
         addExpense,
         allExpenses,
+        allExpensesForCategory,
+        deleteExpense,
 
     }
 }
